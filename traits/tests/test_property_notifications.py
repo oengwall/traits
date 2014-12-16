@@ -110,11 +110,11 @@ def test_property_notification_with_lists():
     assert sl.prop == 3
 
     # Entity without proper attribute should not trigger property notification.
-    v3 = WrongEntity(val2=3)
+    v3 = WrongEntity(val2=5)
     sl.mylist.append(v3)
     assert sl.prop == 3
 
-    # Please do not mind if non-HasTraits object is in list.
+    # Don't complain if there's a non-HasTraits object in the list.
     sl.mylist = [v1, v2, v3, 2]
     assert sl.prop == 3
 

@@ -341,7 +341,8 @@ class ListenerItem ( ListenerBase ):
         """
         # Make sure we actually have an object to set listeners on and that it
         # has not already been registered (cycle breaking):
-        if (new is None) or (new is Undefined) or (new in self.active) or not isinstance(new, HasTraits):
+        if ((new is None) or (new is Undefined) or (new in self.active) or
+            not isinstance(new, HasTraits)):
             return INVALID_DESTINATION
 
         # Create a dictionary of {name: trait_values} that match the object's
