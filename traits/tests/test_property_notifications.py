@@ -14,7 +14,7 @@
 
 from __future__ import absolute_import
 
-from ..api import HasTraits, Property, List, Int, cached_property
+from ..api import cached_property, HasTraits, Int, List, Property
 
 
 class Test(HasTraits):
@@ -86,8 +86,10 @@ def test_property_notifications():
 class Entity(HasTraits):
     val = Int
 
+
 class WrongEntity(HasTraits):
     val2 = Int
+
 
 class WithList(HasTraits):
     mylist = List
@@ -96,6 +98,7 @@ class WithList(HasTraits):
     @cached_property
     def _get_prop(self):
         return sum(i.val for i in self.mylist if isinstance(i, Entity))
+
 
 def test_property_notification_with_lists():
     v1 = Entity(val=1)
@@ -106,11 +109,13 @@ def test_property_notification_with_lists():
     sl.mylist = [v1, v2]
     assert sl.prop == 3
 
-    v3 = WrongEntity(val2=3)  #Entity without proper attribute should not trigger property notification
+    # Entity without proper attribute should not trigger property notification.
+    v3 = WrongEntity(val2=3)
     sl.mylist.append(v3)
     assert sl.prop == 3
 
-    sl.mylist = [v1,v2, v3, 2] #please do not mind if non-HasTraits object is in list
+    # Please do not mind if non-HasTraits object is in list.
+    sl.mylist = [v1, v2, v3, 2]
     assert sl.prop == 3
 
     sl.mylist.append(v1)
