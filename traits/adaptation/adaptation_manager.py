@@ -240,7 +240,8 @@ class AdaptationManager(HasTraits):
         # The counter is an increasing number, and is used to make the
         # priority queue stable w.r.t insertion time
         # (see http://bit.ly/13VxILn).
-        offer_queue = [((0, 0, next(counter)), [], type(adaptee))]
+        adaptee_type = getattr(adaptee, '__class__', None) or type(adaptee)
+        offer_queue = [((0, 0, next(counter)), [], adaptee_type)]
 
         while len(offer_queue) > 0:
             # Get the most specific candidate path for adaptation.
